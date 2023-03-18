@@ -2,14 +2,13 @@ var path = require('path');
 var fs = require('fs');
 const discord = require('Discord.js');
 const {Client,Events,GatewayIntentBits,REST,Routes} = require('Discord.js');
-const { createAudioPlayer,generateDependencyReport } = require('@discordjs/voice');
+const { createAudioPlayer,joinVoiceChannel,getVoiceConnection,VoiceConnectionStatus,generateDependencyReport } = require('@discordjs/voice');
 const {token,guildId,clientId} = require('./config.json');
 const rest = new REST({ version: '10' }).setToken(token);
 commands = []
 
 const client = new Client({intents: [GatewayIntentBits.Guilds]});
 client.commands = new discord.Collection();
-const player = createAudioPlayer();
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -51,6 +50,7 @@ client.on(Events.InteractionCreate, async interaction => {
         await command.execute(interaction);
     }catch(error){
         console.error('command was not found!!');
+        console.error(error)
     }
 });
 
