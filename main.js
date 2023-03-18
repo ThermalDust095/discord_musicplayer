@@ -7,7 +7,7 @@ const {token,guildId,clientId} = require('./config.json');
 const rest = new REST({ version: '10' }).setToken(token);
 commands = []
 
-const client = new Client({intents: [GatewayIntentBits.Guilds]});
+const client = new Client({intents: [GatewayIntentBits.Guilds,GatewayIntentBits.GuildVoiceStates]});
 client.commands = new discord.Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
@@ -20,7 +20,6 @@ for (const file of commandFiles) {
     commands.push(command.data.toJSON());
 }
 
-console.log(commands);
 (async () => {
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
@@ -52,6 +51,7 @@ client.on(Events.InteractionCreate, async interaction => {
         console.error('command was not found!!');
         console.error(error)
     }
+    
 });
 
 client.login(token)

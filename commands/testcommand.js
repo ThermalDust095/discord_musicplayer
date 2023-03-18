@@ -1,5 +1,7 @@
 const { SlashCommandBuilder,ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
+let a = "hello"
+
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('test')
@@ -13,7 +15,6 @@ module.exports = {
             .setLabel('Click Me')
             .setStyle(ButtonStyle.Primary),
         );
-
-        await interaction.reply({ content: 'I think you should', components: [row]})
+        await interaction.reply({ content: a, components: [row]})
     },
 }
